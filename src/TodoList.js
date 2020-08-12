@@ -8,11 +8,14 @@ export default class TodoList extends React.Component {
     }
 
     adicionar () {
+        const self = this;
         this.setState((state) => {
-            return {
+            const novo_state = {
                 novo: '',
-                items: [ {texto: state.novo, checked: false}, ...state.items] 
-            } 
+                items: [ {texto: state.novo, checked: false}, ...state.items]
+            };
+           self.props.set_contador(novo_state.items.length);
+            return novo_state;
         });
     }
 
