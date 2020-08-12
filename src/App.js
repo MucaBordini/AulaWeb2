@@ -1,36 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TodoList from './TodoList';
 
-class App extends React.Component {
-  constructor (props) {
-    super(props);
-    this.state = { nome: '',
-      contador: 0
-    };
-  }
+function App () {
+  //Substitui costructor
+  const [nome, set_nome] = useState(''),
+        [contador, set_contador] = useState(0);
+  
+  // constructor (props) {
+  //   super(props);
+  //   this.state = { nome: '',
+  //     contador: 0
+  //   };
+  // }
 
-  set_contador (novo_contador) {
-    this.setState({ contador: novo_contador });
-  }
+  // set_contador (novo_contador) {
+  //   this.setState({ contador: novo_contador });
+  // }
 
-  change (ev) {
-    this.setState({ nome: ev.target.value });
-  }
+  // change (ev) {
+  //   this.setState({ nome: ev.target.value });
+  // }
 
-  render () {
+  // render () {
     return (
       <div className="App">
         <h1>Primeira aplicação usando creat react app</h1>
-        <input type="text" value={this.state.nome}
-          onChange={this.change.bind(this)}
+        <input type="text" value={nome}
+          onChange={(ev) => set_nome(ev.target.value)}
         />
         <div>
-          Contador: {this.state.contador}
+          Contador: {contador}
         </div>
-        <TodoList titulo={this.state.nome} set_contador={this.set_contador.bind(this)}/>
+        <TodoList titulo={nome} set_contador={set_contador}/>
       </div>
     );
-  }
+  // }
   
 }
 
