@@ -1,4 +1,5 @@
 import React from 'react';
+import './TodoList.css';
 
 export default class TodoList extends React.Component {
     constructor (props) {
@@ -8,14 +9,28 @@ export default class TodoList extends React.Component {
 
     adicionar () {
         this.setState((state) => {
-            return { novo: '', items: [state.novo, ...state.items] } 
+            return {
+                novo: '',
+                items: [ {texto: state.novo, checked: false}, ...state.items] 
+            } 
         });
     }
 
-    handle_change (ev) {
+    handle_change (ev) { 
         this.setState({ novo: ev.target.value })
     }
 
+    check (index) {
+        this.setState((state) => {
+            return {
+                items: state.items.map((item, id) => {
+                    if ( id === index)
+                        return { texto: item.texto, checked: true };
+                    return item;
+                })
+            }
+        })
+    }
     render() {
         return(
             <div className="todo">
@@ -23,11 +38,17 @@ export default class TodoList extends React.Component {
                 <input type="text" value={this.state.novo} onChange={this.handle_change.bind(this)} />
                 <button onClick={this.adicionar.bind(this)}>Adicionar</button>
                 <ul>
-                    {this.state.items.map((item, index) => 
-                        <li key={index}>{ item }</li>
-                    )}
+                    {this.state.items.map((item, index) => {
+                        return <li key={index}>
+                            <input type="checkbox"
+                                onChange={this.check.bind(this, index)}
+                                checked={item.checked}/>
+                            <span className={item.checked ? "checked" : null}>{item.texto}</span>
+                        </li>
+                    })}
+                    
+                        
                 </ul>
             </div>
         );
     }
-}
